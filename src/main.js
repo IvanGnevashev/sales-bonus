@@ -110,7 +110,7 @@ function analyzeSalesData(data, options) {
             const cost = product.purchase_price * item.quantity;
             const revenue = calculateRevenue(item, product);
             const profit = revenue - cost;
-            seller.profit += profit;
+            seller.profit = +(seller.profit + profit).toFixed(2);
             if (!seller.products_sold[item.sku]) {
                 seller.products_sold[item.sku] = 0;
             }

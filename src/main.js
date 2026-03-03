@@ -122,7 +122,8 @@ function analyzeSalesData(data, options) {
     sellerStats.sort((a, b) => b.profit - a.profit);
     // @TODO: Назначение премий на основе ранжирования
     sellerStats.forEach((seller, index) => {
-        seller.bonus = calculateBonus(index, sellerStats.length, seller);
+        const bonus = calculateBonus(index, sellerStats.length, seller);
+        seller.bonus = +bonus.toFixed(2);
         seller.top_products = Object.entries(seller.products_sold)
         .map(([sku, quantity]) => ({sku, quantity}))
         .sort((a, b) => b.quantity - a.quantity)

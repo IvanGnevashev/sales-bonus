@@ -110,18 +110,20 @@ function analyzeSalesData(data, options) {
             const cost = product.purchase_price * item.quantity;
             const revenue = calculateRevenue(item, product);
             const profit = revenue - cost;
-            seller.profit += profit;
+            seller.profit = +((seller.profit +profit).toFixed(2));
             if (!seller.products_sold[item.sku]) {
                 seller.products_sold[item.sku] = 0;
             }
             seller.products_sold[item.sku] += item.quantity;
         });
+        seller.revenue = +seller.revenue.toFixed(2);
     });
     // @TODO: Сортировка продавцов по прибыли
     sellerStats.sort((a, b) => b.profit - a.profit);
     // @TODO: Назначение премий на основе ранжирования
     sellerStats.forEach((seller, index) => {
         seller.bonus = calculateBonus(index, sellerStats.length, seller);
+        seller.bonus = +seller.bonus.toFixed(2);
         seller.top_products = Object.entries(seller.products_sold)
         .map(([sku, quantity]) => ({sku, quantity}))
         .sort((a, b) => b.quantity - a.quantity)
@@ -131,10 +133,10 @@ function analyzeSalesData(data, options) {
     return sellerStats.map(seller => ({
         seller_id: seller.seller_id,
         name: seller.name,
-        revenue: +seller.revenue.toFixed(2),
-        profit: +seller.profit.toFixed(2),
+        revenue: +seller.revenue,
+        profit: +seller.profit,
         sales_count: seller.sales_count,
         top_products: seller.top_products,
-        bonus: +seller.bonus.toFixed(2)
+        bonus: +seller.bonus
     }));
 }

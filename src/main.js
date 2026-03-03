@@ -86,7 +86,7 @@ function analyzeSalesData(data, options) {
         revenue: 0,
         profit: 0,
         bonus: 0,
-         products_sold: {},
+        products_sold: {},
         original_data: seller
     }));
 
@@ -110,7 +110,7 @@ function analyzeSalesData(data, options) {
             const cost = product.purchase_price * item.quantity;
             const revenue = calculateRevenue(item, product);
             const profit = revenue - cost;
-            seller.profit = +((seller.profit +profit).toFixed(2));
+            seller.profit += profit;
             if (!seller.products_sold[item.sku]) {
                 seller.products_sold[item.sku] = 0;
             }
@@ -123,7 +123,6 @@ function analyzeSalesData(data, options) {
     // @TODO: Назначение премий на основе ранжирования
     sellerStats.forEach((seller, index) => {
         seller.bonus = calculateBonus(index, sellerStats.length, seller);
-        seller.bonus = +seller.bonus.toFixed(2);
         seller.top_products = Object.entries(seller.products_sold)
         .map(([sku, quantity]) => ({sku, quantity}))
         .sort((a, b) => b.quantity - a.quantity)

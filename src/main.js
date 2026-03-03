@@ -110,7 +110,7 @@ function analyzeSalesData(data, options) {
             const cost = product.purchase_price * item.quantity;
             const revenue = calculateRevenue(item, product);
             const profit = revenue - cost;
-            seller.profit += profit;
+            seller.profit = +(seller.profit + profit).toFixed(2);
             if (!seller.products_sold[item.sku]) {
                 seller.products_sold[item.sku] = 0;
             }
@@ -119,7 +119,6 @@ function analyzeSalesData(data, options) {
     });
     sellerStats.forEach(seller => {
     seller.revenue = +seller.revenue.toFixed(2);
-    seller.profit = +seller.profit.toFixed(2);
     });
     // @TODO: Сортировка продавцов по прибыли
     sellerStats.sort((a, b) => b.profit - a.profit);

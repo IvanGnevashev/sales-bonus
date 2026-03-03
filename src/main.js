@@ -116,7 +116,6 @@ function analyzeSalesData(data, options) {
             }
             seller.products_sold[item.sku] += item.quantity;
         });
-        seller.revenue = +seller.revenue.toFixed(2);
     });
     sellerStats.forEach(seller => {
     seller.revenue = +seller.revenue.toFixed(2);

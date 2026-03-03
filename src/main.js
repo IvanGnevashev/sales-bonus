@@ -14,7 +14,7 @@ function calculateSimpleRevenue(purchase, _product) {
 
    const revenue = totalPrice * (1 - discountDecimal);
 
-   return Math.round(revenue * 100) / 100;
+   return revenue;
 }
 
 /**
